@@ -1,0 +1,154 @@
+
+### OPEN DIRECTORY IN TERMINAL ###
+
+Step1: To create a project enter the command in the main directory-
+## django-admin startproject <projectName>
+## django-admin startproject project1
+then the default project-set gets created with the name
+
+Step2: To create a app for the Project in the directory or changing the directory using 'cd <projectName>'-
+## python <directory/manage.py> startapp <appName>
+## python manage.py startapp app1
+then the default app-set gets created with the name
+
+Step3: Register the app created in the settings.py of project folder-
+## '<appName>'      in the "INSTALLED_APPS = [...,]" section ~line33
+
+Step4: Use the manage.py on browser-
+## python <directory/manage.py> runserver
+## python manage.py runserver
+then the 'db.sqlite3' gets created
+
+Step5: Create a python file for urls in app folder-
+## url.py
+And then use paths as reqd for triggering different pages from the views.py
+
+Step6: Rendering html files-
+Create a 'templates' Folder in <appName> directory which holds the html files for different pages
+Now use the html files with render() in views.py  by defining functions which are called from urls.py of app 
+
+Step7: Creating Database-
+Create a class with field names and types in the models.py
+## python manage.py makemigrations
+then the '0001_initial.py' is created in migratons folder
+And when commmand is run after every some changes is done in the models.py 
+new file as such gets created with respective names
+## python manage.py migrate
+Creates the entire database in the 'db.sqlite3' 
+To update the database every time after change in models.py,
+migrate is to be run after makemigrations
+
+
+Step8: To open Django Shell-
+## python manage.py shell
+For exiting- >>> exit()
+Importing the models ,ie, database-
+## >>> from app1.models import *
+
+For CREATING record in db-
+## >>> variable=class(field=value)
+>>> stud=Student(name="Saruthuku", age=22,email="sarthak@gmail.com",address="Durgapur",)
+>>> stud
+<Student: Student object (None)>
+## >>> variable.save()
+>>> stud.save()
+>>> stud
+<Student: Student object (1)>
+<OR>
+## >>> variable=class.objects.create(field=value)
+>>> stud=Student.objects.create(name="Sarthakabc",age=12,email="sarthakabc@gmail.com",address="Andal",)
+>>> stud
+<Student: Student object (2)>
+<OR>
+## >>> variable={"field":"value"}
+## >>> class.objects.create(**variable)
+
+For READING record in db-
+>>> Student.objects.all()
+<QuerySet [<Student: Student object (1)>, <Student: Student object (2)>]>
+>>> Student.objects.all()[0]
+<Student: Student object (1)>
+>>> Student.objects.all()[0].name
+'Saruthuku'
+>>> Student.objects.all()[0].id
+1
+NB::These datas are temporary and vanishes once the shell  is closed/reopened.
+
+For UPDATING record in db-
+## >>> variable=class.objects.get(id=1)
+## >>> class.field="newValue"
+## >>> variable.save()
+<OR>
+## >>> class.objects.filter(id=1).update(field="newValue")
+
+For DELETING record in db-
+## >>> class.objects.get(id=1).delete()
+## >>> class.objects.all().delete()
+
+
+
+Step A: Getting data from frontend to backend-
+I.  <form  method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        ...
+    </form> 
+    It's the properties used in the form syntax in html file
+II. Create a class in models.py for the input fields and the properties of type of input
+    The variables in models.py should match the name property of the input fields of html file
+III.Create function in views.py to get the datas stored in models.py
+    admin.site.register(class)  To register the class in admin.py
+
+
+Step B: Showing data from back end to frontend-
+I   For displaying the texts, Use {{<class>.<field>}} in the html file 
+II. For media files,
+                    import os
+                    STATIC_URL='/static/'
+                    STATIC_ROOT=os.path.join(BASE_DIR,'staticfiles')
+
+                    STATICFILES_DIR={
+                        os.path.join(BASE_DIR,"public/staticfiles")
+                    }
+
+                    MEDIA_ROOT= os.path.join(BASE_DIR,"public/staticfiles")
+                    MEDIA_URL='/media/'
+            In the settings.py of Project
+                    from django.conf.urls.static import static
+                    from django.conf import settings
+                    from django. contrib.staticfiles.urls import staticfiles_urlpatterns
+                    if settings.DEBUG:
+                        urlpatterns+= static(settings.MEDIA_URL,
+                                            document_root=settings.MEDIA_ROOT)
+                    urlpatterns+= staticfiles_urlpatterns()
+            In the urls.py of Project
+                
+
+Step C: Deleting data from backend using frontend-
+Create a function which basically uses id of object to
+redirect to a page > delete the data > redirect to the original page
+But no real html file is rendered in the delete_function Instead it does by
+variable=class.objects.get(id=id)
+variable.delete()
+And the original file gets redirected by redirect()
+
+
+Step D: Updating existing data-
+Rewrite the same methods and html codes as in create with required changes
+To show the existing value in the feild, use "{{class.feild}}"
+then use save() in the def of views.py to save the changes
+
+
+
+Step9: Logging in to django administration(/admin) for a project-
+## python manage.py createsuperuser
+o/p-Username (leave blank to use 'tarasankar'): sarthak
+Email address: 
+Password: {{123}}
+Password (again): {{123}}
+This password is too short. It must contain at least 8 characters.
+This password is too common.
+This password is entirely numeric.
+Bypass password validation and create user anyway? [y/N]: y
+Superuser created successfully.
+
+
