@@ -1,0 +1,56 @@
+{% extends "base.html"%}
+{% block start %}
+
+
+<div class="container"> 
+
+    <form  method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+        
+        <section class="container">
+            <div class="login-container">
+                <h1 class="opacity">REGISTER</h1>
+
+                {% comment %} {%if messages%}
+                    <ul class="messages">
+                        {%for message in messages%}
+                        <li>
+                            {% if messages.tags %} 
+                                class= "{{message.tags}}"
+                            {% endif %} > {{message}}
+                        </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %} {% endcomment %}
+
+                <div>
+                    {%for message in messages%}
+                        {{message}}
+                    {% endfor %}
+                </div>
+
+
+                <form>
+                    <input name="first_name" type="text" placeholder="FIRST NAME" /><br>
+                    <input name="last_name" type="text" placeholder="LAST NAME" /><br>
+                    <input name="username" type="text" placeholder="USERNAME" /><br>
+                    <input name="password" type="password" placeholder="PASSWORD" /><br>
+                  <button class="opacity">SUBMIT</button>
+                </form>
+                <div class="register-forget opacity">
+                    <p>Already have an account?</p>
+                  <a href="/login">LOGIN</a>
+                </div>
+            </div>
+          </section>
+
+          <a href="/recipes">GO BACK</a>
+
+    </form>
+</div>
+
+
+
+{% endblock %}
+
+

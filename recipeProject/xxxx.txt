@@ -1,0 +1,24 @@
+######### FOR DJANGO ADMINISTRATION PAGE>>>
+
+
+Open your terminal.
+
+Navigate to your Django project directory.
+
+Run the Django shell with the following command:
+
+In the shell, execute the following commands to reset the password for a specific user
+
+>>> from django.contrib.auth.models import User
+>>> user=User.objects.get(username='sarthak')
+>>> user.set_password('sarthak2004')
+>>> user.save()
+>>> exit()
+
+
+for viewing website,,,
+http://127.0.0.1:8000/recipes/
+
+for veiwing admin panel,,,
+http://127.0.0.1:8000/admin/
+

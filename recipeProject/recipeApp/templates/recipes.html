@@ -1,0 +1,70 @@
+{% extends "base.html"%}
+{% block start %}
+
+<h2>Welcome {{request.user.first_name}}</h2>
+
+<h3>Add Recipe</h3>
+
+<div class="container"> 
+
+    <form  method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% comment %}
+        method="post" enctype="multipart/form-data" & csrf_token>>>
+        Django syntax used to pass values from frontend to backend
+        >enctype="multipart/form-data":: Used for inputing files
+        >csrf Checks if the request originated is from the same server or not ie,
+            checks whether the running prject and the db matches or not  
+            And gets created automatically everytime the page is reloaded 
+        {% endcomment %}
+
+
+        <div>
+            <label for="recipe">Recipe Name</label>
+            <input name="recipeName" required type="text"  placeholder=" Your Recipe">
+        </div>
+        <div>
+            <label for="recipe" >Recipe Description</label>
+            <textarea name="recipeDescription" required placeholder="Enter your Description here..."></textarea>
+        <div>
+            <label for="recipe">Recipe Image</label>
+            <input name="recipeImage"  type="file"  placeholder=" Your Recipe">
+        </div>
+        <button type="submit" class="btn" >Add Recipe</button>
+    </form> 
+
+    <form action="">
+        <div>
+            <label for="recipe">Search food</label>
+            <input name="search"  type="text"  placeholder=" Search foodssss">
+            <button type="submit">Search</button>
+        </div>
+
+    </form>
+</div>
+
+{% comment %} {{recipes}} {% endcomment %}
+
+<table>
+    <tr>
+        <th>Serial no.</th>
+        <th>Recipe Name</th>
+        <th>Recipe Description</th>
+        <th>Recipe Image</th>
+        <th>Action</th>
+    </tr>
+    {% for recipe in recipes %}
+    <tr>
+        <td>{{forloop.counter}}</td>
+        <td>{{recipe.recipeName}}</td>
+        <td>{{recipe.recipeDescription}}</td>
+        <td><img src="/media/{{recipe.recipeImage}}" alt="img" height=90px></td>
+        <td><a href="/deleteRecipe/{{recipe.id}}">DELETE</a></td>
+        <td><a href="/updateRecipe/{{recipe.id}}">UPDATE</a></td>
+    </tr>
+    {% endfor %}
+
+</table>
+
+
+{% endblock %}

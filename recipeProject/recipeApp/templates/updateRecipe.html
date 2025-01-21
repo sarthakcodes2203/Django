@@ -1,0 +1,37 @@
+{% extends "base.html"%}
+{% block start %}
+
+<h3>Update Recipe</h3>
+
+<div class="container"> 
+
+    <form  method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% comment %}
+        method="post" enctype="multipart/form-data" & csrf_token>>>
+        Django syntax used to pass values from frontend to backend
+        >enctype="multipart/form-data":: Used for inputing files
+        >csrf Checks if the request originated is from the same server or not ie,
+            checks whether the running prject and the db matches or not  
+            And gets created automatically everytime the page is reloaded 
+        {% endcomment %}
+        <div>
+            <label for="recipe">Recipe Name</label>
+            <input name="recipeName" value="{{recipes.recipeName}}" required type="text"  placeholder=" Your Recipe">
+        </div>
+        <div>
+            <label for="recipe" >Recipe Description</label>
+            <textarea name="recipeDescription" value="" required placeholder="Enter your Description here...">{{recipes.recipeDescription}}</textarea>
+        <div>
+            <label for="recipe">Recipe Image</label>
+            <input name="recipeImage"  type="file"  placeholder=" Your Recipe">
+        </div>
+        <button type="submit" class="btn" >Update Recipe</button>
+    </form> 
+
+</div>
+
+
+
+
+{% endblock %}
